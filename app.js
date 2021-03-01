@@ -51,7 +51,7 @@ const conexion = mysql.createConnection({
     host: 'localhost',
     user: 'admin',
     password: 'admin',
-    database: 'gestion_pagos'
+    database: 'my_books'
 });
 
 conexion.connect((error) => {
