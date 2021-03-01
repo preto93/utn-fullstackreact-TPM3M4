@@ -14,9 +14,7 @@ exports.auth = function (req, res, next) {
 
         jwt.verify(token, process.env.SESSION_SECRET, (err, user) => {
             if (err) {
-                res.status(401).send({
-                    error: 'Invalid token'
-                })
+                throw new Error('Invalid token');
             }
             next();
         });
