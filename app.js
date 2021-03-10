@@ -49,11 +49,14 @@ app.post("/libro", async (req, res) => {
       persona_id = req.body.persona_id;
     }
     // Ahora guardamos el post
-    const query = "INSERT INTO libro (nombre) VALUE (?)";
-    const respuesta = await qy(query, [req.body.nombre.toUpperCase()]);
-
+    const query =
+      "INSERT INTO libro (nombre, categoria_id, persona_id) VALUES (?, ?, ?)";
+    const respuesta = await qy(query, [
+      req.body.nombre.toUpperCase(),
+      req.body.categoria_id,
+      persona_id,
+    ]);
     // volver a ver el video de lorena desde 1:50 para estar mas seguro si no me estoy comiendo algo
-    console.log(respuesta);
     res.send({ respuesta: respuesta });
   } catch (e) {
     console.error(e.message);
