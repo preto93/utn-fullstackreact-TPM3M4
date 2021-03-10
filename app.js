@@ -18,8 +18,8 @@ const mysql = require("mysql");
 // Estos datos de conexion pueden variar segun como este configurado el servidor de cada usuario
 const conexion = mysql.createConnection({
   host: "localhost",
-  user: "admin",
-  password: "admin",
+  user: "root",
+  password: "",
   database: "my_books",
 });
 
