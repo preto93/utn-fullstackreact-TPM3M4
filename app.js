@@ -75,17 +75,6 @@ app.get("/libro/:id", async (req, res) => {
   }
 });
 
-app.get("/libro", async (req, res) => {
-  try {
-    const query = "SELECT * FROM libro";
-    const respuesta = await qy(query, [req.body.nombre]);
-    res.send({ respuesta: respuesta });
-  } catch (e) {
-    console.error(e.message);
-    res.status(413).send({ Error: e.message });
-  }
-});
-
 // Se ejecuta la app para que escuche al puerto determinado
 app.listen(PORT, () => {
   console.log(`Our app is running on port ${PORT} `);
