@@ -68,7 +68,11 @@ app.get("/libro/:id", async (req, res) => {
   try {
     const query = "SELECT * FROM libro WHERE id = ?";
     const respuesta = await qy(query, [req.params.id]);
-    res.send({ respuesta: respuesta });
+    if (respuesta.length == 1) {
+      res.json(respuesta[0]);
+    } else {
+      res.status(404).send();
+    }
   } catch (e) {
     console.error(e.message);
     res.status(413).send({ Error: e.message });
