@@ -56,8 +56,10 @@ app.post("/libro", async (req, res) => {
       req.body.categoria_id,
       persona_id,
     ]);
-    // volver a ver el video de lorena desde 1:50 para estar mas seguro si no me estoy comiendo algo
-    res.send({ respuesta: respuesta });
+    const registroInsertado = await qy("SELECT * FROM libro WHERE id=?", [
+      req.params.id,
+    ]);
+    res.send(registroInsertado[0]);
   } catch (e) {
     console.error(e.message);
     res.status(413).send({ Error: e.message });
