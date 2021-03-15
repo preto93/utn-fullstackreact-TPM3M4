@@ -156,13 +156,51 @@ app.put('/persona/:id', async (req, res) => {
 
     } catch (e) {
         res.status(413).send({ "Error": e.message });
+
+        
     }
+    
 });
 
+//PAULA GATICA
+//Los endpoints los hice con un route para agrupar los metodos de persona/:id
+app.route('/persona/:id')
 
+.get( async (req,res)=>{
+    try{
+        const query = 'SELECT * FROM persona where id=?';
+        const respuesta = await qy(query, [req.params.id]);
 
+        if(respuesta.length == 1){
+            res.status(200).json(respuesta[0]).send();
 
-// Se ejecuta la app para que escuche al puerto determinado
-app.listen(PORT, () => {
-    console.log(`Our app is running on port ${PORT} `);
-});
+        } else{
+            res.status(404).send('Persona no encontrada');
+        }
+
+    }catch(e){
+        console.error(e.message);
+        res.status(413).send('ERROR INESPERADO');
+    }
+})
+
+.delete( async (req,res)=>{
+    try{
+        const querySelect = 'SELECT * FROM persona where id=?';
+        const queryDelete = 'DELETE FROM persona where id=?';
+        const respuesta = await qy(querySelect, [req.params.id]);
+        
+        if(respuesta.length == 1){
+        
+            await qy(queryDelete, [req.params.id]);
+            res.status(200).send('USUARIO BORRADO EXITOSAMENTE');
+        } else{
+            res.status(404).send('USUARIO NO ENCONTRADO');
+        }
+
+    }catch(e){
+        console.error(e.message);
+        res.status(413).send('ERROR INESPERADO');
+    }
+
+})
