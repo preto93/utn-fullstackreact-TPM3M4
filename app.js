@@ -5,6 +5,10 @@ const util = require('util');
 const express = require('express');
 const app = express();
 
+// Configuracion de middleware cors
+const cors = require('cors');
+app.use(cors());
+
 // Express recibira y enviara las solicitudes en formato JSON
 app.use(express.json());
 
