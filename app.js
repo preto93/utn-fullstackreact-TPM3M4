@@ -16,8 +16,8 @@ const PORT = process.env.PORT || 3000;
 const mysql = require("mysql");
 
 // Cors
-const cors = require("cors");
-app.use(cors());
+// const cors = require("cors");
+// app.use(cors());
 
 // Estos datos de conexion pueden variar segun como este configurado el servidor de cada usuario
 const conexion = mysql.createConnection({
