@@ -163,7 +163,7 @@ app.put('/persona/:id', async (req, res) => {
 });
 
 //PAULA GATICA
-//Los endpoints los hice con un route para agrupar los metodos de persona/:id
+//Los Endpoints los hice con un route para agrupar los metodos de persona/:id
 app.route('/persona/:id')
 
 .get( async (req,res)=>{
