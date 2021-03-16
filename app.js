@@ -75,6 +75,7 @@ app.post("/libro", async (req, res) => {
     const registroInsertado = await qy("SELECT * FROM libro WHERE id=?", [
       req.params.id,
     ]);
+    // ACA HAY QUE VER SI CUANDO DEVUELVE CUMPLE CON EL REQUERIMIENTO
     res.send(registroInsertado[0]);
     res.status(200).send();
   } catch (e) {
