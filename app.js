@@ -41,6 +41,73 @@ const qy = util.promisify(conexion.query).bind(conexion);
 
 // De aqui en mas se deben escribir las rutas de la API
 
+
+//FEDERICO TARTARI
+
+app.post('/categoria', async (req, res) => {
+    try {
+        // Valido que me manden bien la info
+
+        if (!req.body.nombre){
+            throw new Error ('Faltan datos');
+
+        }
+
+        const nombre = req.body.nombre;
+
+        //Verifico que no exista previamente esa categoria
+        let query = 'SELECT id FROM categoria WHERE nombre = ?';
+        
+        let respuesta = await qy (query, [nombre]);
+
+        if (respuesta.length > 0) {
+            throw new Error ('Ese nombre de categoria ya existe'); 
+        }
+    
+        //Guardo la nueva categoria
+        query = 'INSERT INTO categoria (nombre) VALUE (?)';
+        respuesta = await qy(query, [nombre]);
+
+        console.log(respuesta);
+        res.status(200).send("Se guardo correctamente");
+    }
+    catch(e){
+        console.error(e.mesagge);
+        res.status(413).send({"Error": e.mesagge});
+
+    }
+
+});
+
+app.delete('/categoria/:id', async (req, res) => {
+    try {
+       
+        //Verifico que no exista ningún libro asociado a la categoria
+        let query = 'SELECT * FROM libro WHERE categoria_id = ?';
+
+        let respuesta = await qy(query, [req.params.id]);
+
+    if (respuesta.length > 0) {
+        throw new Error ("Categoria con libro asociado, no se puede eliminar");
+    }
+    
+    //Elimino la categoria
+    query = 'DELETE FROM categoria WHERE id = ?';
+
+    respuesta = await qy(query, [req.params.id]);
+    
+    res.status(200).send("Se borro correctamente");
+
+    } 
+    catch(e){
+        console.error(e.mesagge);
+        res.status(413).send({"Error": e.mesagge});
+
+    }
+});
+
+
+
 // CLAUDIO GARCIA IGLESIA
 app.post('/persona', async (req, res) => {
     try {
