@@ -48,11 +48,7 @@ const qy = util.promisify(conexion.query).bind(conexion);
 app.post("/libro", async (req, res) => {
   try {
     // Valido que me esten enviando bien la data
-    if (
-      !req.body.nombre.toUpperCase ||
-      !req.body.descripcion.toUpperCase ||
-      !req.body.categoria_id
-    ) {
+    if (!req.body.nombre || !req.body.descripcion || !req.body.categoria_id) {
       throw new Error("No escribiste todos los datos necesarios");
     }
 
@@ -66,10 +62,10 @@ app.post("/libro", async (req, res) => {
     }
     // Ahora guardamos el post
     const query =
-      "INSERT INTO libro (nombre, descripcion,, categoria_id, persona_id) VALUES (?, ?, ?, ?)";
+      "INSERT INTO libro (nombre, descripcion, categoria_id, persona_id) VALUES (?, ?, ?, ?)";
     const respuesta = await qy(query, [
-      req.body.nombre.toUpperCase(),
-      req.body.descricion.toUpperCase(),
+      req.body.nombre,
+      req.body.descricion,
       req.body.categoria_id,
       persona_id,
     ]);

@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 01, 2021 at 02:21 AM
--- Server version: 10.3.27-MariaDB-0+deb10u1
--- PHP Version: 7.3.27-1~deb10u1
+-- Servidor: localhost
+-- Tiempo de generación: 16-03-2021 a las 15:42:30
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `my_books`
+-- Base de datos: `my_books`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categoria`
+-- Estructura de tabla para la tabla `categoria`
 --
 
 CREATE TABLE `categoria` (
@@ -35,20 +35,21 @@ CREATE TABLE `categoria` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libro`
+-- Estructura de tabla para la tabla `libro`
 --
 
 CREATE TABLE `libro` (
   `id` int(11) NOT NULL,
   `nombre` varchar(200) NOT NULL,
   `categoria_id` int(11) NOT NULL,
-  `persona_id` int(11) DEFAULT NULL
+  `persona_id` int(11) DEFAULT NULL,
+  `descripción` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `persona`
+-- Estructura de tabla para la tabla `persona`
 --
 
 CREATE TABLE `persona` (
@@ -62,15 +63,14 @@ CREATE TABLE `persona` (
 --
 -- Indexes for dumped tables
 --
-
 --
--- Indexes for table `categoria`
+-- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `libro`
+-- Indices de la tabla `libro`
 --
 ALTER TABLE `libro`
   ADD PRIMARY KEY (`id`),
@@ -78,39 +78,39 @@ ALTER TABLE `libro`
   ADD KEY `persona_id` (`persona_id`);
 
 --
--- Indexes for table `persona`
+-- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `categoria`
+-- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `libro`
+-- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `persona`
+-- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `libro`
+-- Filtros para la tabla `libro`
 --
 ALTER TABLE `libro`
   ADD CONSTRAINT `libro_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`),
