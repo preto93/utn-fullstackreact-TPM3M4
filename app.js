@@ -65,7 +65,7 @@ app.post("/libro", async (req, res) => {
       "INSERT INTO libro (nombre, descripcion, categoria_id, persona_id) VALUES (?, ?, ?, ?)";
     const respuesta = await qy(query, [
       req.body.nombre,
-      req.body.descricion,
+      req.body.descripcion,
       req.body.categoria_id,
       persona_id,
     ]);
