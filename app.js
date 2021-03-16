@@ -49,8 +49,9 @@ app.post('/persona', async (req, res) => {
         let { nombre, apellido, alias, email } = req.body;
 
         // Verifica que las variables definidas en el paso anterior no sean indefinidas (undefined)
+        // y que no sean espacios en blanco o vacios.
         [nombre, apellido, alias, email].forEach(element => {
-            if (!element) {
+            if (!element || (element.replace(/ /g, '') === '')) {
                 throw new Error('Faltan datos')
             }
         });
@@ -98,10 +99,16 @@ app.put('/persona/:id', async (req, res) => {
         const id = req.params.id;
         let { nombre, apellido, alias, email } = req.body;
 
-        // Verifica que no se hayan enviado campos que no existen
+        // Verifica que no se hayan enviado campos que no existen 
+        // y que los que existen no sean espacios en blanco
         let contador = 0;
         [nombre, apellido, alias, email].forEach(element => {
-            if (!!element) { contador++ }
+            if (!!element) {
+                contador++
+                if (element.replace(/ /g, '') === '') {
+                    throw new Error('Se enviaron uno o mas campos invalidos');
+                }
+            }
         })
         if (Object.keys(req.body).length > contador) {
             throw new Error('Se enviaron uno o mas campos invalidos')
