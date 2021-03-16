@@ -41,6 +41,10 @@ const qy = util.promisify(conexion.query).bind(conexion);
 // De aqui en mas se deben escribir las rutas de la API
 // Rutas de FerPM
 
+// IMPORTANTE!!! AVISO QUE TODAVÍA ESTOY REVISANDO MIS RUTAS
+// ME DI CUENTA QUE SE ME PASARON MUCHOS DETALLES PEDIDOS EN EL ENUNCIADO DEL TP
+// SEGUIRÉ COMITEANDO Y ACTUALIZANDO MAÑANA
+
 app.post("/libro", async (req, res) => {
   try {
     // Valido que me esten enviando bien la data
