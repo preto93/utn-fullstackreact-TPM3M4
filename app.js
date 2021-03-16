@@ -48,9 +48,16 @@ const qy = util.promisify(conexion.query).bind(conexion);
 app.post("/libro", async (req, res) => {
   try {
     // Valido que me esten enviando bien la data
-    if (!req.body.nombre.toUpperCase) {
-      throw new Error("No escribiste el nombre del libro");
+    if (
+      !req.body.nombre.toUpperCase ||
+      !req.body.descripcion.toUpperCase ||
+      !req.body.categoria_id
+    ) {
+      throw new Error("No escribiste todos los datos necesarios");
     }
+
+    // ACA ME FALTAN VALIDAR MUCHAS COSAS QUE SE ESPECIFICAR EN EL ENUNCIADO DEL TP Y NO LAS HABÍA VISTO
+    // MAÑANA TRABAJARÉ EN ESTO
     // Antes de guardar el post contemplo la posibilidad de que persona_id pueda venir NULL
     let persona_id = "";
     if (req.body.persona_id) {
@@ -58,9 +65,10 @@ app.post("/libro", async (req, res) => {
     }
     // Ahora guardamos el post
     const query =
-      "INSERT INTO libro (nombre, categoria_id, persona_id) VALUES (?, ?, ?)";
+      "INSERT INTO libro (nombre, descripcion,, categoria_id, persona_id) VALUES (?, ?, ?, ?)";
     const respuesta = await qy(query, [
       req.body.nombre.toUpperCase(),
+      req.body.descricion.toUpperCase(),
       req.body.categoria_id,
       persona_id,
     ]);
@@ -68,6 +76,7 @@ app.post("/libro", async (req, res) => {
       req.params.id,
     ]);
     res.send(registroInsertado[0]);
+    res.status(200).send();
   } catch (e) {
     console.error(e.message);
     res.status(413).send({ Error: e.message });
