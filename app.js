@@ -56,8 +56,9 @@ app.post("/libro", async (req, res) => {
       throw new Error("No escribiste todos los datos necesarios");
     }
 
-    // ACA ME FALTAN VALIDAR MUCHAS COSAS QUE SE ESPECIFICAR EN EL ENUNCIADO DEL TP Y NO LAS HABÍA VISTO
+    // ACA ME FALTAN VALIDAR MUCHAS COSAS QUE SE ESPECIFICAN EN EL ENUNCIADO DEL TP Y NO LAS HABÍA VISTO
     // MAÑANA TRABAJARÉ EN ESTO
+
     // Antes de guardar el post contemplo la posibilidad de que persona_id pueda venir NULL
     let persona_id = "";
     if (req.body.persona_id) {
