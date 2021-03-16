@@ -170,8 +170,65 @@ app.put('/persona/:id', async (req, res) => {
     }
 });
 
+// PATRICIO HERNAN MURIEGA
+app.delete('/libro/:id', async (req, res) => {
+    try {
+        //Primero chequeo que el libro exista
+        const id = req.params.id;
+        let query = 'SELECT * FROM libro WHERE id = ?';
+        let respuesta = await qy(query, id);
+        if (respuesta.length == 0) {
+            throw new Error("No se encuentra este libro");
+        }
+        //En caso de que exista verifico el estado de persona_id para ver si fue prestado
+        else {
+            query = 'SELECT * FROM libro WHERE id = ? AND persona_id <> 0';
+            respuesta = await qy(query, id);
+            if (respuesta.length > 0) {
+                throw new Error("Ese libro esta prestado, no se puede borrar");
+            }
+            //Por último, ejecuto la consulta para borrar el libro
+            else {
+                query = 'DELETE FROM libro WHERE id = ?';
+                respuesta = await qy(query, id);
+                res.status(200).send("Se borro correctamente");
+            }
+        }
+    }
+    catch (e) {
+        console.error(e.message);
+        res.status(413).send({ "Error": e.message });
+    }
+});
 
-
+app.put('/libro/devolver/:id', async (req, res) => {
+    try {
+        //Compruebo que el libro exista
+        let query = 'SELECT * FROM libro WHERE id = ?';
+        let respuesta = await qy(query, [req.params.id]);
+        if (respuesta.length == 0) {
+            throw new Error("Ese libro no existe");
+        }
+        //Compruebo que el libro esté prestado
+        else {
+            query = 'SELECT * FROM libro WHERE id = ? AND persona_id is NULL';
+            respuesta = await qy(query, [req.params.id]);
+            if (respuesta.length > 0) {
+                throw new Error("Ese libro no estaba prestado");
+            }
+            //Hechas las comprobaciones, actualizo la columna a Null, indicando que el libro está en biblioteca
+            else {
+                query = 'UPDATE libro SET persona_id = NULL WHERE id = ?';
+                respuesta = await qy(query, [req.params.id]);
+                res.status(200).send("Se realizo la devolucion correctamente");
+            }
+        }
+    }
+    catch (e) {
+        console.error(e.message);
+        res.status(413).send({ "Error": e.message });
+    }
+});
 
 // Se ejecuta la app para que escuche al puerto determinado
 app.listen(PORT, () => {
