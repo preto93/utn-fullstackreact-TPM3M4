@@ -230,6 +230,96 @@ app.put('/libro/devolver/:id', async (req, res) => {
     }
 });
 
+
+
+//Rutas sin asignar
+app.get('/categoria', async (req, res) => {
+    try {
+        // Muestra las categorias
+        let query = 'SELECT * FROM categoria';
+        let queryRes = await qy(query);
+
+        if (queryRes.length === 0) {
+            res.status(413).send([]);
+        };
+
+        res.status(200);
+        if (queryRes.length > 1) {
+            res.send(queryRes);
+        } else {
+            res.send(queryRes[0]);
+        };
+
+    } catch (e) {
+        res.status(413).send({ "Error": e.message });
+    }
+});
+
+app.get('/categoria/:id', async (req, res) => {
+    try {
+        // Desestructuracion
+        const { id } = req.params;
+
+        // Verifica que la categoria exista
+        let query = 'SELECT * FROM categoria WHERE id = ?';
+        let queryRes = await qy(query, [id]);
+        if (queryRes.length === 0) {
+            throw new Error('Categoria no encontrada');
+        };
+
+        // Muestra la categoria
+
+        res.status(200);
+        res.send(queryRes[0]);
+
+    } catch (e) {
+        res.status(413).send({ "Error": e.message });
+    }
+});
+
+app.get('/persona', async (req, res) => {
+    try {
+        // Muestra las personas
+        let query = 'SELECT * FROM persona';
+        let queryRes = await qy(query);
+
+        if (queryRes.length === 0) {
+            res.status(413).send([]);
+        };
+
+        res.status(200);
+        if (queryRes.length > 1) {
+            res.send(queryRes);
+        } else {
+            res.send(queryRes[0]);
+        };
+
+    } catch (e) {
+        res.status(413).send({ "Error": e.message });
+    }
+});
+
+app.get('/libro', async (req, res) => {
+    try {
+        // Muestra los libros
+        let query = 'SELECT * FROM libro';
+        let queryRes = await qy(query);
+
+        if (queryRes.length === 0) {
+            res.status(413).send([]);
+        };
+
+        res.status(200);
+        if (queryRes.length > 1) {
+            res.send(queryRes);
+        } else {
+            res.send(queryRes[0]);
+        };
+
+    } catch (e) {
+        res.status(413).send({ "Error": e.message });
+    }
+});
 // Se ejecuta la app para que escuche al puerto determinado
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${PORT} `);
